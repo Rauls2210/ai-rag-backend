@@ -477,3 +477,16 @@ logger = logging.getLogger(__name__)
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+
+
+
+# ==============================
+# Render Deployment Fix
+# ==============================
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(
+        "server:app",
+        host="0.0.0.0",  # Required for Render.com
+        port=int(os.environ.get("PORT", 8000)),  # Render assigns dynamic port
+    )
